@@ -2,117 +2,363 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>d3-start</title>
+    <title>D3js-H3</title>
     <script src="https://d3js.org/d3.v3.js"></script>
-    
+    <style>
+        body{background: #eee;}
+        .axis path,
+        .axis line{
+            fill: none;
+            stroke: black;
+            shape-rendering: auto;
+        }
+        .axis text {
+            font-size: 11px; 
+            fill: blue;
+        }
+        .axis3 path,
+        .axis3 line{
+            fill: none;
+            stroke: black;
+            shape-rendering: auto;
+        }
+        .axis3 text {
+            font-size: 11px; 
+            fill: blue;
+    </style>   
 </head>
 <body>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <input type="button" value="新增" onclick="update()">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="移除" onclick="update_remove()">
-  
+<!--part 1 -->
+<div class="H1">
   <script>
-    var w=1000;
-    var h=300; //svg的寬高
-    var p=100; //圖和邊框之距
+    var w=500;
+    var h=200; //svg的寬高
+    var p=80; //圖和邊框之距
     var arr = [85, 60, 99, 49, 77, 82];
-        svg();
-        bind(arr); 
-        render();
-      
-        function svg(){ 
-           d3.select("body")
+        svg1();
+        bind1(arr); 
+        render1(); 
+        function svg1(){ 
+           d3.select("div.H1")
              .append("svg")
              .attr({
                "width": w,
-               "height": h-60
+               "height": h-60,
+               "class":"H1"
            });
         }
-        function bind(data){
-          var selection = d3.select("body")
+        function bind1(data){
+          var selection_1 = d3.select("svg.H1")
                             .selectAll("rect")
+                            .attr({'class':'H1'})
                             .data(data); 
-              selection.enter().append("rect");
-              selection.exit().remove(); 
-        }
-          var selection_text = d3.select("svg")
-                                .selectAll("text")
-                                .data(data);
-            selection_text.enter().append("text");
-            selection_text.exit().remove();    
+              selection_1.enter().append("rect").attr({'class':'H1'});
+              selection_1.exit().remove(); 
         
-    
-         function render(){ 
-           d3.selectAll("rect")
+          var selection_text1 = d3.select("svg.H1")
+                                .selectAll("text")
+                                .attr({'class':'H1'})
+                                .data(data);
+            selection_text1.enter().append("text").attr({'class':'H1'});
+            selection_text1.exit().remove();    
+        }
+         function render1(){ 
+           d3.selectAll("rect.H1")
              .attr({
-               "x": function(d,i){
-                   return p + 23 * i;
-               },
-               "y":function(d){
-                   return h - p - d;
-               },
-               "width": 20,
-               "height": function(d){
-                 return d;
-               },
+               "x": function(d,i){return p + 43 * i;},
+               "y":function(d){return h - p - d;},
+               "width": 40,
+               "height": function(d){ return d;},
                "fill": function(d){
                if(d < 70){
-                 return "red"
+                 return "red";
                }
                else {
-                 return "lightgreen"
+                 return "lightgreen";
                }
              }         
-        });
-       d3.selectAll("text")
+        })
+       d3.selectAll("text.H1")
          .attr({
                "x": function(d,i){
-                 return p+23*i;
+                 return p+43*i+13;
                }, 
                "y": function(d){
                  return h-p-d+d+20;
                },
                "font-size": 12
             })
-            .text(function(d){
-         return d;
-       })
-               
-    }
+          .text(function(d){return d;})       
+        }
         function update(){
           var num=random(10,100);
           arr.push(num); 
-          bind(arr);
-          render();
-        }
-    
-        function update_remove(){
-          var num=random(10,100);
-          arr.pop(num); 
-          bind(arr);
-          render();
+          bind1(arr);
+          render1();
+        }   
+        function remove(){
+          arr.pop(); 
+          bind1(arr);
+          render1();
         }
  
         function random(N,M){
             return Math.ceil(Math.random()*(M-N)+N);
         }
+</script>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <input type="button" value="新增" onclick="update()">
+ <input type="button" value="移除" onclick="remove()">
+</div>  
+<br>
+<hr>
+
+<!--part 2     -->
+
+<svg class="H2" width="900" height="300"></svg>
+  <script>  
+       var dataSet_1 =[
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"不動產開發業","platform":"無載具","number":1530691,"amount":2081432419},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"批發業","platform":"無載具","number":4142289,"amount":5565063958},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"資料處理及資訊供應服業","platform":"無載具","number":780708,"amount":1359622827},{"date":"2016/8/1","city":"臺北市","cid":"A","industry":"零售業","platform":"無載具","number":64927420,"amount":19680973217},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"電信業","platform":"無載具","number":225300,"amount":2302012551},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"餐飲業","platform":"無載具","number":9855745,"amount":5193141219},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"影片服務、聲音錄製及音樂出版業","platform":"使用載具","number":1518980,"amount":2606453896},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"資料處理及資訊供應服務業","platform":"使用載具","number":3936592,"amount":2441866930},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"零售業","platform":"使用載具","number":9675319,"amount":4693713798},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"電信業","platform":"使用載具","number":15939352,"amount":15982550394},
+        {"date":"2016/8/1","city":"臺北市","cid":"A","industry":"電力及燃氣供應業","platform":"使用載具","number":688044,"amount":6096595655}];
+
+      bind2(dataSet_1);
+      render2(dataSet_1);
+
+      function bind2(dataSet){
+          var selection_2 = d3.select("svg.H2")
+                    .selectAll("rect")
+                    .data(dataSet);
+            selection_2.enter().append("rect");
+            selection_2.exit().remove();
+
+          var selection_text2 = d3.select("svg.H2")
+                    .selectAll("text")
+                    .data(dataSet);
+            selection_text2.enter().append("text");
+            selection_text2.exit().remove();
+            }  
+        function render2(dataSet){
+            var xScale = d3.scale.linear()
+                    .domain([d3.min(dataSet,function(d){
+                        return d.amount;
+                    }), d3.max(dataSet, function(d){
+                            return d.amount;})])
+                    .range([5,200]);
+            
+            var xAxis = d3.svg.axis()
+                   .scale(xScale)	
+                   .orient("bottom")
+                   .ticks(6)
+                   .tickFormat(function(d){
+                       return d/1000000000+"G";
+                   });
+  
+         d3.select("svg.H2").selectAll("rect").attr({
+            x: 300,
+            y: function(d,i){return 10+20*i;},
+            width: function(d,i){return xScale(d.amount);},
+            height: 18,
+            fill: "red"
+         });
+         d3.select("svg.H2").selectAll("text").attr({
+            x: 10,
+            y: function(d,i){ return 25+20*i;}
+         }).text(function(d){ return d.industry;});
+
+//    var prefix = d3.formatPrefix(1e9);
+  
+        d3.select("svg.H2").append("g")
+            .attr("class","axis")
+            .attr("transform","translate(300,235)")
+            .call(xAxis);
+    }
     </script>
-    <svg width="600" height="400">
-    <rect x="100" y="115" width="20" height="85" fill="lightgreen"></rect>
-    <rect x="123" y="140" width="20" height="60" fill="red">    
-    </rect>
-    <rect x="146" y="101" width="20" height="99" fill="lightgreen"></rect>
-    <rect x="169" y="151" width="20" height="49" fill="red">        
-    </rect>
-    <rect x="192" y="123" width="20" height="77" fill="lightgreen"></rect>
-    <rect x="215" y="118" width="20" height="82" fill="lightgreen"></rect>
-    <text x="100" y="220" font-size="12">85</text>
-    <text x="123" y="220" font-size="12">60</text>
-    <text x="146" y="220" font-size="12">99</text>
-    <text x="169" y="220" font-size="12">49</text>
-    <text x="192" y="220" font-size="12">77</text>
-    <text x="215" y="220" font-size="12">82</text>
-    </svg>
+    </div> 
+<br>        
+<hr>
+ 
+<!--part 3-->
+    <script>
+     // 1. 定義width, height, padding, letterList變數
+        var w3 = 1000;
+        var h3 = 600;
+        var padding3 = 80; //旁邊間隔
+        
+            //2. 建立svg()畫布環境
+            svg3();       
+            //3. 用d3讀取csv
+            d3.csv("invoice.csv",mid, function(dataSet){
+               bind3(dataSet);
+               render3(dataSet);
+            });
+            function mid(d){
+                d.amount = +d.amount;
+                d.number = +d.number;
+                return d;
+            }
+            function svg3(){
+               d3.select("body").append("svg").attr({width:w3,height:h3,class:'H3'});
+                d3.select("svg.H3").append("g").append("rect").attr({
+                    width: "100%",
+                    height: "100%",
+                    fill: "white"
+                });
+            }
+            //4. 建立bind()
+            function bind3(dataSet){
+                var selection_3 = d3.select("svg.H3")
+                                    .selectAll('circle')
+                                    .data(dataSet);
+                selection_3.enter().append("circle").attr({class:'H3'});
+                selection_3.exit().remove();
+            }
+            function render3(dataSet){
+            //5. 定義xScale,yScale,rScale, fScale比例尺(range目的在決定在svg上位置)
+               var xScale3 = d3.time.scale()
+                        .domain([new Date('2013/01/01'),new Date('2016/08/01')])
+                        .range([padding3,w3-padding3]);
+               var yScale3 = d3.scale.linear()
+                        .domain([0,d3.max(dataSet,function(d){return d.number;})])
+                        .range([h3-padding3,padding3-80]);
+               var rScale3 = d3.scale.linear()
+                        .domain([d3.min(dataSet,function(d){
+                            return d.amount;
+                        }),d3.max(dataSet,function(d){
+                            return d.amount;
+                        })])
+                        .range([5,30]);
+                
+               var fScale3 = d3.scale.category20();
+                
+               var xAxis3 = d3.svg.axis().scale(xScale3).orient('bottom').ticks(12);
+                
+               var yAxis3 = d3.svg.axis().scale(yScale3).orient('left').ticks(12);
+                
+            //6. 建立render()繪圖
+                d3.selectAll('circle.H3')
+                  .attr({
+                    cx: function(d){return xScale3(new Date(d.date));},
+                    cy: function(d){return yScale3(d.number);},
+                    r: function(d){return rScale3(d.amount);},
+                    fill: function(d){return fScale3(d.cid);}
+                  });
+                d3.select('svg.H3').append('g')
+                                .attr('class','axis3')
+                                .attr('transform','translate(0,'+(h3-padding3+20)+')')
+                                .call(xAxis3);
+                d3.select('svg.H3').append('g')
+                                  .attr('class','axis3')
+                                  .attr('transform','translate(70,0)')
+                                  .call(yAxis3);
+            }
+    </script>
+<br>
+   <hr>    
     
-  </body>
-  </html>
+<!--   part 4-->
+
+   <svg class="H4" width="340" height="340"></svg>
+  
+   <script>
+
+        var svg = d3.select("svg.H4").attr({
+            width: "340",
+            height: "340"
+        });
+
+        svg.append("g").append("rect").attr({
+            fill: "white",
+            width: "100%",
+            height: "100%"
+        });
+
+        //--------------------------------
+
+        var easeArr = ["linear", "quad", "cubic", "sin", "exp", "circle", "elastic", "back", "bounce"];
+
+        bind04(easeArr);
+        render04();
+
+        function bind04(dataSet) {
+            var selection_circle = d3.select("svg.H4").selectAll("circle").data(dataSet);
+            var selection_text = d3.select("svg.H4").selectAll("text").data(dataSet);
+            var selection_line = d3.select("svg.H4").selectAll("line").data(dataSet);
+
+            // 初始化設定
+            selection_line.enter().append("line").attr({
+                x1: 100,
+                y1: function(d, i) {
+                    return 20 + i * 35;
+                },
+                x2: 300,
+                y2: function(d, i) {
+                    return 20 + i * 35;
+                },
+                stroke: "lightgreen"
+            }).text(function(d) {
+                return d;
+            });
+            selection_line.exit().remove();
+
+            selection_circle.enter().append("circle").attr({
+                cx: 100,
+                cy: function(d, i) {
+                    return 20 + i * 35;
+                },
+                r: 15,
+                fill: "gold"
+            });
+            selection_circle.exit().remove();
+
+            selection_text.enter().append("text").attr({
+                x: 5,
+                y: function(d, i) {
+                    return 25 + i * 35;
+                },
+                fill: "black"
+            }).text(function(d) {
+                return d;
+            });
+            selection_text.exit().remove();
+
+
+        }
+
+        function render04() {
+
+            d3.select("svg.H4").selectAll("circle")
+                .on("click", function(d) {
+                    if (d3.select(this).attr("cx") < 120) {
+                        d3.select(this)
+                            .transition()
+                            .duration(1000)
+                            .ease(d)
+                            .attr({
+                                cx: 300
+                            })
+                    } else {
+                        d3.select(this)
+                            .transition()
+                            .duration(1000)
+                            .ease(d)
+                            .attr({
+                                cx: 100
+                            })
+                    }
+                });
+        }
+    </script>
+    </script>
+   
+   
+</body>
+</html>
